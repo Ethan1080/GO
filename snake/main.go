@@ -8,7 +8,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type Game struct {
+type Game struct { //DZDDZDIQHDQDZDHKJZDHLKJZDQJKL
 	grid   [32][32]int
 	snakeX int
 	snakeY int
@@ -16,7 +16,7 @@ type Game struct {
 
 func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
-
+		g.snakeX += 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
 
