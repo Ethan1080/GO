@@ -1,4 +1,4 @@
-package main //BLABLABLA BLEBLEBLE BLUBLUBLUUUUU
+package main
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type Game struct { //DZDDZDIQHDQDZDHKJZDHLKJZDQJKL
+type Game struct {
 	grid   [32][32]int
 	snakeX int
 	snakeY int
