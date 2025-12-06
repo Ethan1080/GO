@@ -1,4 +1,4 @@
-package main
+package main //BLABLABLA BLEBLEBLE BLUBLUBLUUUUU
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type Game struct { //DZDDZDIQHDQDZDHKJZDHLKJZDQJKL
 
 func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
-		g.snakeX += 1
+
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
 
