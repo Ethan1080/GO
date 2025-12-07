@@ -8,25 +8,35 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+type point struct {
+	x int
+	y int
+}
+
+type player struct {
+	x    int
+	y    int
+	dir  int
+	body point
+}
+
 type Game struct {
-	grid     [32][32]int
-	snakeX   int
-	snakeY   int
-	snakeDir int16
+	grid  [32][32]int
+	snake player
 }
 
 func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
-		g.snakeDir = 1
+		g.snake.dir = 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.snakeDir = 2
+		g.snake.dir = 2
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) || ebiten.IsKeyPressed(ebiten.KeyQ) {
-		g.snakeDir = 3
+		g.snake.dir = 3
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) || ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.snakeDir = 4
+		g.snake.dir = 4
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
@@ -40,7 +50,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	rows := len(g.grid)
 	cols := len(g.grid[0])
 
-	cellWidth := float64(1920) / float64(cols)
+	cellWidth := float64(1080) / float64(cols)
 	cellHeight := float64(1080) / float64(rows)
 
 	for x := 0; x < 32; x++ {
@@ -57,7 +67,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return 1920, 1080
+	return 1080, 1080
 }
 
 func (g *Game) reset() {
@@ -69,7 +79,7 @@ func main() {
 	fmt.Print("start")
 
 	game := &Game{}
-	ebiten.SetWindowSize(1920, 1080)
+	ebiten.SetWindowSize(1080, 1080)
 	ebiten.SetWindowTitle("snake")
 
 	game.reset()
