@@ -1,4 +1,4 @@
-package main
+package main //test github
 
 import (
 	"fmt"
