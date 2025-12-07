@@ -1,4 +1,4 @@
-package main //salut salut
+package main
 
 import (
 	"fmt"
