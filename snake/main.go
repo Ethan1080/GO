@@ -14,10 +14,10 @@ type point struct {
 }
 
 type player struct {
-	x    int
-	y    int
-	dir  int
-	body point
+	headx int
+	heady int
+	dir   int
+	body  point
 }
 
 type Game struct {
@@ -26,6 +26,43 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
+	g.handleKey()
+	g.moveSnakeHead()
+
+	if g.snake.headx < 0 || g.snake.headx > 31 || g.snake.heady > 32 || g.snake.heady < 0 {
+		fmt.Println("Perdu!")
+		//perdu g.reset()
+		for {
+			//
+		}
+	}
+
+	g.UpdateGrid()
+
+	//time.Sleep(1 * time.Second)
+
+	return nil
+}
+
+func (g *Game) UpdateGrid() {
+	g.grid = [32][32]int{}
+	g.grid[g.snake.headx][g.snake.heady] = 1
+}
+
+func (g *Game) moveSnakeHead() {
+	switch g.snake.dir {
+	case 1:
+		g.snake.heady += 1
+	case 2:
+		g.snake.heady += -1
+	case 3:
+		g.snake.headx += -1
+	case 4:
+		g.snake.headx += 1
+	}
+}
+
+func (g *Game) handleKey() {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
 		g.snake.dir = 1
 	}
@@ -42,16 +79,14 @@ func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
 		g.reset()
 	}
-
-	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	rows := len(g.grid)
 	cols := len(g.grid[0])
 
-	cellWidth := float64(1080) / float64(cols)
-	cellHeight := float64(1080) / float64(rows)
+	cellWidth := float64(920) / float64(cols)
+	cellHeight := float64(920) / float64(rows)
 
 	for x := 0; x < 32; x++ {
 		for y := 0; y < 32; y++ {
@@ -67,19 +102,20 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return 1080, 1080
+	return 920, 920
 }
 
 func (g *Game) reset() {
 	g.grid = [32][32]int{}
-	g.grid[1][1] = 1
+	g.snake.headx = 3
+	g.snake.headx = 1
 }
 
 func main() {
-	fmt.Print("start")
+	fmt.Println("start")
 
 	game := &Game{}
-	ebiten.SetWindowSize(1080, 1080)
+	ebiten.SetWindowSize(920, 920)
 	ebiten.SetWindowTitle("snake")
 
 	game.reset()
