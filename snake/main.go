@@ -12,21 +12,21 @@ type Game struct {
 	grid     [32][32]int
 	snakeX   int
 	snakeY   int
-	snakeDir string
+	snakeDir int16
 }
 
 func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
-		g.snakeDir = ""
+		g.snakeDir = 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.snakeDir = ""
+		g.snakeDir = 2
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) || ebiten.IsKeyPressed(ebiten.KeyQ) {
-		g.snakeDir = ""
+		g.snakeDir = 3
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) || ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.snakeDir = ""
+		g.snakeDir = 4
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
@@ -40,7 +40,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	rows := len(g.grid)
 	cols := len(g.grid[0])
 
-	// Calculer la taille de chaque carré pour que ça remplisse la fenêtre
 	cellWidth := float64(1920) / float64(cols)
 	cellHeight := float64(1080) / float64(rows)
 
@@ -48,7 +47,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		for y := 0; y < 32; y++ {
 			if g.grid[x][y] == 1 {
 				rect := ebiten.NewImage(int(cellWidth), int(cellHeight))
-				rect.Fill(color.RGBA{255, 0, 0, 255}) // rouge
+				rect.Fill(color.RGBA{255, 0, 0, 255})
 				op := &ebiten.DrawImageOptions{}
 				op.GeoM.Translate(float64(x)*cellWidth, float64(y)*cellHeight)
 				screen.DrawImage(rect, op)
