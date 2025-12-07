@@ -9,23 +9,24 @@ import (
 )
 
 type Game struct {
-	grid   [32][32]int
-	snakeX int
-	snakeY int
+	grid     [32][32]int
+	snakeX   int
+	snakeY   int
+	snakeDir string
 }
 
 func (g *Game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) || ebiten.IsKeyPressed(ebiten.KeyZ) {
-
+		g.snakeDir = ""
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
-
+		g.snakeDir = ""
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) || ebiten.IsKeyPressed(ebiten.KeyQ) {
-
+		g.snakeDir = ""
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) || ebiten.IsKeyPressed(ebiten.KeyD) {
-
+		g.snakeDir = ""
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyR) {
