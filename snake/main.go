@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -21,26 +22,26 @@ type player struct {
 }
 
 type Game struct {
-	grid  [32][32]int
-	snake player
+	grid     [32][32]int
+	snake    player
+	lastMove time.Time
 }
 
 func (g *Game) Update() error {
 	g.handleKey()
-	g.moveSnakeHead()
+	if time.Since(g.lastMove) >= 350*time.Millisecond {
+		g.moveSnakeHead()
+		g.UpdateGrid()
+		g.lastMove = time.Now()
+	}
 
 	if g.snake.headx < 0 || g.snake.headx > 31 || g.snake.heady > 32 || g.snake.heady < 0 {
 		fmt.Println("Perdu!")
 		//perdu g.reset()
-		for {
-			//
-		}
+		g.reset()
 	}
 
 	g.UpdateGrid()
-
-	//time.Sleep(1 * time.Second)
-
 	return nil
 }
 
@@ -52,13 +53,13 @@ func (g *Game) UpdateGrid() {
 func (g *Game) moveSnakeHead() {
 	switch g.snake.dir {
 	case 1:
-		g.snake.heady += 1
+		g.snake.heady--
 	case 2:
-		g.snake.heady += -1
+		g.snake.heady++
 	case 3:
-		g.snake.headx += -1
+		g.snake.headx--
 	case 4:
-		g.snake.headx += 1
+		g.snake.headx++
 	}
 }
 
@@ -82,11 +83,8 @@ func (g *Game) handleKey() {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	rows := len(g.grid)
-	cols := len(g.grid[0])
-
-	cellWidth := float64(920) / float64(cols)
-	cellHeight := float64(920) / float64(rows)
+	cellWidth := float64(920) / 32
+	cellHeight := float64(920) / 32
 
 	for x := 0; x < 32; x++ {
 		for y := 0; y < 32; y++ {
@@ -107,8 +105,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 func (g *Game) reset() {
 	g.grid = [32][32]int{}
-	g.snake.headx = 3
-	g.snake.headx = 1
+	g.snake.headx = 10
+	g.snake.heady = 10
 }
 
 func main() {
