@@ -15,19 +15,20 @@ func division(a, b int) (int, error) {
 }
 
 func main() {
+	var a, b int
+
+	fmt.Println("Hello, world!")
+	fmt.Println("Choisisez un nombre")
+	fmt.Scanln(&a)
+	fmt.Println("Choisisez un autre nombre")
+	fmt.Scanln(&b)
+
 	// On essaye une division normale
-	result, err := division(10, 2)
+	result, err := division(a, b)
 	if err != nil {
 		fmt.Println("Erreur :", err)
 		return
 	}
-	fmt.Println("10 / 2 =", result)
-
-	// Maintenant, on provoque une erreur
-	result, err = division(10, 0)
-	if err != nil {
-		fmt.Println("Erreur :", err) // <- affichera l’erreur
-		return
-	}
-	fmt.Println("10 / 0 =", result)
+	fmt.Println(a, " / ", b, " =", result)
+	fmt.Println("Fin")
 }
